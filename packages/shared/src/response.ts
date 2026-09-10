@@ -3,17 +3,21 @@ import type { Response } from "express";
 export function successResponse(
   res: Response,
   data: unknown,
-  statusCode = 200
+  statusCode = 200,
 ) {
   return res.status(statusCode).json({
     success: true,
-    data
+    data,
   });
 }
 
-export function failResponse(res: Response, message: false, statusCode = 400) {
+export function failResponse(
+  res: Response,
+  message: string | string[] | Record<string, unknown>,
+  statusCode = 400,
+) {
   return res.status(statusCode).json({
-    success: true,
-    message
+    success: false,
+    message,
   });
 }

@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
+import { logger } from "./logger";
 
 export function errorHandler(
   err: unknown,
   _req: Request,
   res: Response,
-  _next: NextFunction
+  _next: NextFunction,
 ) {
   if (
     typeof err === "object" &&
@@ -14,15 +15,16 @@ export function errorHandler(
   ) {
     const error = err as {
       statusCode: number;
-      message: string;
+      message: unknown;
     };
     return res.status(error.statusCode).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
+  logger.error({ err }, "Unhandled internal server error");
   return res.status(500).json({
     success: false,
-    message: "Internal Server Error"
+    message: "Internal Server Error",
   });
 }
