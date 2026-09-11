@@ -4,6 +4,9 @@
   "description": "",
   "private": true,
   "main": "index.js",
+  "scripts": {
+    "dev:auth": "npm run dev -w auth-service"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
